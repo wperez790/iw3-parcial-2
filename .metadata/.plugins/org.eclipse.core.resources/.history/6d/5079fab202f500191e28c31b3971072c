@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+
+<link href="modules/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="modules/bootstrap/dist/css/bootstrap-theme.min.css" rel="stylesheet">
+<link href="modules/font-awesome/web-fonts-with-css/css/fontawesome-all.min.css" rel="stylesheet">
+<link href="modules/angular-bootstrap/ui-bootstrap-csp.css" rel="stylesheet">
+<link href="modules/angucomplete-alt/angucomplete-alt.css" rel="stylesheet">
+<link href="modules/angular-ui-select/dist/select.min.css" rel="stylesheet">
+<link href="modules/angular-ui-notification/dist/angular-ui-notification.min.css" rel="stylesheet">
+<link href="modules/angular-ui-switch/angular-ui-switch.min.css" rel="stylesheet">
+
+<link href="modules/intl-tel-input/build/css/intlTelInput.css" rel="stylesheet">
+
+
+<link href="modules/angular-dialog-service/dist/dialogs.min.css" rel="stylesheet">
+
+<link href="modules/angular-xeditable/dist/css/xeditable.min.css" rel="stylesheet">
+
+
+<link href="modules/sweetalert/dist/sweetalert.css" rel="stylesheet">
+
+
+<script type="text/javascript" src="modules/sockjs-client/dist/sockjs.min.js"></script>
+<script type="text/javascript" src="modules/stomp-websocket/lib/stomp.min.js"></script> 
+    
+<script type="text/javascript" src="modules/moment/min/moment-with-locales.min.js"></script>
+
+
+<script type="text/javascript" src="modules/jquery/dist/jquery.min.js"></script>
+<script type="text/javascript" src="modules/jquery-ui/jquery-ui.min.js"></script>
+<script type="text/javascript" src="modules/angular/angular.min.js"></script>
+<script type="text/javascript" src="modules/ng-stomp/dist/ng-stomp.standalone.min.js"></script>
+<script type="text/javascript" src="modules/ngstorage/ngStorage.min.js"></script>	
+
+<script type="text/javascript" src="modules/intl-tel-input/build/js/intlTelInput.min.js"></script>	
+<script type="text/javascript" src="modules/intl-tel-input/lib/libphonenumber/build/utils.js"></script>	
+
+<script type="text/javascript" src="modules/international-phone-number/releases/international-phone-number.min.js"></script>	
+
+
+<script type="text/javascript" src="modules/angular-ui-switch/angular-ui-switch.min.js"></script>
+
+<script type="text/javascript" src="modules/chart.js/dist/Chart.min.js"></script>
+<script type="text/javascript" src="modules/angular-chart.js/dist/angular-chart.min.js"></script>
+
+<script type="text/javascript" src="modules/angular-route/angular-route.min.js"></script>
+<script type="text/javascript" src="modules/angular-sanitize/angular-sanitize.min.js"></script>
+<script type="text/javascript" src="modules/angular-animate/angular-animate.min.js"></script>
+<script type="text/javascript" src="modules/angular-touch/angular-touch.min.js"></script>
+<script type="text/javascript" src="modules/angular-bootstrap/ui-bootstrap.min.js"></script>
+<script type="text/javascript" src="modules/angular-bootstrap/ui-bootstrap-tpls.min.js"></script>
+<script type="text/javascript" src="modules/angular-utils-pagination/dirPagination.js"></script>
+
+<script type="text/javascript" src="modules/spin.js/spin.js"></script>
+<script type="text/javascript" src="modules/angular-spinner/angular-spinner.min.js"></script>
+<script type="text/javascript" src="modules/angular-loading-spinner/angular-loading-spinner.js"></script>
+<script type="text/javascript" src="modules/angular-ui-select/dist/select.min.js"></script>
+<script type="text/javascript" src="modules/angucomplete-alt/dist/angucomplete-alt.min.js"></script>
+
+<script type="text/javascript" src="modules/angular-dragdrop/src/angular-dragdrop.min.js"></script>
+<script type="text/javascript" src="modules/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
+<script type="text/javascript" src="modules/angular-xeditable/dist/js/xeditable.min.js"></script>
+
+<script type="text/javascript" src="modules/bootstrap/dist/js/bootstrap.min.js"></script>
+
+
+<script type="text/javascript" src="modules/sweetalert/dist/sweetalert.min.js"></script>
+<script type="text/javascript" src="modules/angular-sweetalert/SweetAlert.min.js"></script>
+
+<script type="text/javascript" src="modules/angular-dialog-service/dist/dialogs.min.js"></script>
+<script type="text/javascript" src="modules/angular-dialog-service/dist/dialogs-default-translations.min.js"></script>
+
+
+<script type="text/javascript" src="app.js"></script>
+<title></title>
+</head>
+<body ng-app="iw3">
+
+{{1+2}}
+<div ng-controller="controlador1">
+<input type="number" ng-model="numero"/>
+<p style="font-size: {{numero}}px">Texto</p>
+</div>
+
+</body>
+</html>

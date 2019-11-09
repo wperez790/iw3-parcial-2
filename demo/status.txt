@@ -1,0 +1,25 @@
+
+	modificado:     pom.xml
+	modificado:     src/main/java/com/example/demo/ScheduledEvents.java
+	modificado:     src/main/java/com/example/demo/SecurityConfiguration.java
+	nuevo archivo:  src/main/java/com/example/demo/WebSocketConfig.java
+	nuevo archivo:  src/main/java/com/example/demo/business/EmailBusiness.java
+	nuevo archivo:  src/main/java/com/example/demo/business/GraphBusiness.java
+	nuevo archivo:  src/main/java/com/example/demo/business/IEmailBusiness.java
+	nuevo archivo:  src/main/java/com/example/demo/business/IGraphBusiness.java
+	nuevo archivo:  src/main/java/com/example/demo/business/INotificacionesBusiness.java
+	nuevo archivo:  src/main/java/com/example/demo/business/NotificacionesBusiness.java
+	nuevo archivo:  src/main/java/com/example/demo/events/SendWebSocketEvent.java
+	nuevo archivo:  src/main/java/com/example/demo/events/SendWebSocketListener.java
+	nuevo archivo:  src/main/java/com/example/demo/model/dto/ChangeStateMessage.java
+	nuevo archivo:  src/main/java/com/example/demo/model/dto/LabelValue.java
+	nuevo archivo:  src/main/java/com/example/demo/web/AutorizacionesRestController.java
+	modificado:     src/main/java/com/example/demo/web/Constantes.java
+	nuevo archivo:  src/main/java/com/example/demo/web/GraphRestService.java
+	modificado:     src/main/resources/application.properties
+	modificado:     src/main/resources/static/app.js
+	modificado:     src/main/resources/static/controllers/main.controller.js
+	modificado:     src/main/resources/static/index.html
+	nuevo archivo:  src/main/resources/static/services/graph.service.js
+	nuevo archivo:  src/main/resources/static/services/ws.service.js
+	modificado:     src/main/resources/static/views/main.html

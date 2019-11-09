@@ -1,0 +1,9 @@
+package com.example.demo.web;
+
+public class BaseRestController {
+
+	public BaseRestController() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

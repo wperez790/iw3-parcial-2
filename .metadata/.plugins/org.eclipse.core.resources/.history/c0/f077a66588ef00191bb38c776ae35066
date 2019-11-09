@@ -1,0 +1,9 @@
+package com.example.demo;
+
+public class ScheduledEvents {
+
+	public ScheduledEvents() {
+		// TODO Auto-generated constructor stub
+	}
+
+}

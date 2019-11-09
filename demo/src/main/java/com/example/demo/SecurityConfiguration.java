@@ -20,6 +20,7 @@ import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 import com.example.demo.business.IAuthTokenService;
+import com.example.demo.config.JwtTokenUtil;
 import com.example.demo.persistence.UsuarioRepository;
 import com.example.demo.web.Constantes;
 
@@ -30,6 +31,9 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
 	@Autowired
 	private UserDetailsService userDetailService;
+	
+	
+	
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
@@ -66,15 +70,20 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private IAuthTokenService authTokenService;
 	@Autowired
 	private UsuarioRepository usuariosDAO;
-
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.addFilterAfter(new CustomTokenAuthenticationFilter(authTokenService, usuariosDAO),
+		http.addFilterAfter(new CustomTokenAuthenticationFilter(
+				authTokenService, usuariosDAO,userDetailService,jwtTokenUtil
+				),
 				UsernamePasswordAuthenticationFilter.class);
 		http.httpBasic();
 		http.authorizeRequests().antMatchers("/api/v1/**").authenticated();
 		http.authorizeRequests().antMatchers(Constantes.URL_AUTH_INFO, Constantes.URL_LOGINOK, Constantes.URL_TOKEN)
 				.authenticated();
+		http.authorizeRequests().antMatchers("/loginJwt").permitAll();
 
 		// http.formLogin().loginPage("/login.html").successForwardUrl("/index.html");
 		// http.logout().deleteCookies("JSESSIONID", "rmiw3");

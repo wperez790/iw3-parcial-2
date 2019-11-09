@@ -22,7 +22,8 @@ angular.module('iw3').factory('coreService',function($http,URL_BASE){
 				method: 'POST',
 				url: URL_BASE+'loginJwt',
 				headers : { 'Content-Type': 'application/json' },
-				data: 'username='+user.name+'&password='+user.password
+				data: user
+				//data: 'name='+user.name+'&password='+user.password
 			};
 			return $http(req);
 		}

@@ -2,8 +2,7 @@ angular.module('iw3')
 
 .controller(
 		'main',
-		function($scope, $rootScope, $log, graphService, wsService,
-				Notification) {
+		function($scope) {
 			$scope.titulo = "Main";
 
 

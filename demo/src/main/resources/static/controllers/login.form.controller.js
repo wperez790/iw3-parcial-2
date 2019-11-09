@@ -13,6 +13,7 @@ angular.module('iw3')
 			$scope.login = function () {
 				
 				if($scope.checkJWT == true){
+					console.log($scope.user);
 					coreService.loginJwt($scope.user).then(
 							
 						function(resp){ 
@@ -33,26 +34,28 @@ angular.module('iw3')
 						}
 							
 					)
-				}
-				coreService.login($scope.user).then(
-					function(resp){ 
-						if(resp.status===200) {
-							$localStorage.userdata=resp.data;
-							$localStorage.logged=true;
-							$rootScope.autenticado=true;	
-							$rootScope.loginOpen = false;
-							$uibModalInstance.dismiss(true);
-						}else{
-							$rootScope.autenticado=false;	
-							delete $localStorage.userdata;
-							$localStorage.logged=false;
+				}else{
+					coreService.login($scope.user).then(
+						function(resp){ 
+							if(resp.status===200) {
+								$localStorage.userdata=resp.data;
+								$localStorage.logged=true;
+								$rootScope.autenticado=true;	
+								$rootScope.loginOpen = false;
+								$uibModalInstance.dismiss(true);
+							}else{
+								$rootScope.autenticado=false;	
+								delete $localStorage.userdata;
+								$localStorage.logged=false;
+							}
+						},
+						function(respErr){
+							$log.log(respErr);
 						}
-					},
-					function(respErr){
-						$log.log(respErr);
-					}
-				);
+					);
+				}
 			  };  
+			  
 		}); //End LoginFormController
 
 

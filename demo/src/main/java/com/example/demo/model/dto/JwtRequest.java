@@ -1,10 +1,8 @@
 package com.example.demo.model.dto;
 
-import java.io.Serializable;
-public class JwtRequest implements Serializable {
-	private static final long serialVersionUID = 5926468583005150707L;
+public class JwtRequest{
 	
-	private String username;
+	private String name;
 	private String password;
 	
 	//need default constructor for JSON Parsing
@@ -13,15 +11,17 @@ public class JwtRequest implements Serializable {
 		
 	}
 	public JwtRequest(String username, String password) {
-		this.setUsername(username);
+		this.setName(username);
 		this.setPassword(password);
 	}
-	public String getUsername() {
-		return this.username;
+		
+	public String getName() {
+		return name;
 	}
-	public void setUsername(String username) {
-		this.username = username;
+	public void setName(String name) {
+		this.name = name;
 	}
+
 	public String getPassword() {
 		return this.password;
 	}

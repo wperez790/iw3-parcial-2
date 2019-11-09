@@ -4,7 +4,6 @@ import org.json.JSONObject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.web.bind.annotation.CrossOrigin;
@@ -27,14 +26,13 @@ public class JwtAuthenticationRestController {
 	
 	@Autowired
 	private UserDetailsService userDetailsService;
-	
+		
 	@PostMapping(value = "/loginJwt")
-	public ResponseEntity<?> login(@RequestBody JwtRequest authenticationRequest) throws Exception {
+	public ResponseEntity<String> login(@RequestBody JwtRequest authenticationRequest){
 		//authenticate(authenticationRequest.getUsername(), authenticationRequest.getPassword());
-		final UserDetails userDetails = userDetailsService
-				.loadUserByUsername(authenticationRequest.getUsername());
+		final UserDetails userDetails = userDetailsService.loadUserByUsername(authenticationRequest.getName());
 		final String token = jwtTokenUtil.generateToken(userDetails);
-		return new ResponseEntity<String>(getUserJson(authenticationRequest.getUsername(), token),HttpStatus.OK);
+		return new ResponseEntity<String>(getUserJson(authenticationRequest.getName(), token),HttpStatus.OK);
 	}
 	
 	private String getUserJson(String username, String token) {

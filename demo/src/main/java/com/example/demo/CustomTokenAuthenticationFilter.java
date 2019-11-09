@@ -11,22 +11,34 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
+import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 import com.example.demo.business.BusinessException;
 import com.example.demo.business.IAuthTokenService;
 import com.example.demo.business.NotFoundException;
+import com.example.demo.config.JwtTokenUtil;
 import com.example.demo.model.AuthToken;
 import com.example.demo.model.Usuario;
 import com.example.demo.persistence.UsuarioRepository;
+
+import io.jsonwebtoken.ExpiredJwtException;
 
 
 
 public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 	private Logger log = LoggerFactory.getLogger(this.getClass());
-
+	
+	@Autowired
+	private JwtTokenUtil jwtTokenUtil;
+	
+	@Autowired
+	private UserDetailsService jwtUserDetailsService;
 	
 	public CustomTokenAuthenticationFilter(IAuthTokenService authTokenService, UsuarioRepository usuariosDAO) {
 		super();
@@ -41,12 +53,15 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 
 	public static String ORIGIN_TOKEN_TOKEN = "token";
 	public static String ORIGIN_TOKEN_HEADER = "header";
+	
+	public static String AUTH_JWT_HEADER= "JWT-HEADER";
+	public static String AUTH_JWT_PARAMETER= "jwt";
 
 	public static String AUTH_HEADER = "X-AUTH-TOKEN";
 	public static String AUTH_HEADER1 = "XAUTHTOKEN";
 	public static String AUTH_PARAMETER = "xauthtoken";
 	public static String AUTH_PARAMETER1 = "token";
-
+	
 	
 	//public static String ATTR_SESSION_NOT_CREATION = "ATTR_SESSION_NOT_CREATION";
 
@@ -57,6 +72,43 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
+		
+		final String jwtToken = request.getHeader(AUTH_JWT_HEADER);
+		String username = null;
+	
+		
+		if (jwtToken != null) {
+			try {
+				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
+			} catch (IllegalArgumentException e) {
+				log.error("Unable to get JWT Token");
+			} catch (ExpiredJwtException e) {
+				log.error("JWT Token has expired");
+			}
+		} 
+		// Once we get the token validate it.
+		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
+			UserDetails userDetails = this.jwtUserDetailsService.loadUserByUsername(username);
+			// if token is valid configure Spring Security to manually set
+			// authentication
+			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
+						userDetails, null, userDetails.getAuthorities());
+				usernamePasswordAuthenticationToken
+						.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+				// After setting the Authentication in the context, we specify
+				// that the current user is authenticated. So it passes the
+				// Spring Security Configurations successfully.
+				SecurityContextHolder.getContext().setAuthentication(usernamePasswordAuthenticationToken);
+				chain.doFilter(request, response);
+				return;
+			}
+			
+		}
+
+	
+/*CUSTOM TOKEN*/
+		
 		String parameter = request.getParameter(AUTH_PARAMETER);
 		if (!esValido(parameter)) {
 			parameter = request.getParameter(AUTH_PARAMETER1);
@@ -137,7 +189,7 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 			authToken.addRequest();
 			authTokenService.save(authToken);
 
-			String username = authToken.getUsername();
+			username = authToken.getUsername();
 			List<Usuario> lu = usuariosDAO.findByUsername( username);
 			if(lu.size()==1) {
 				log.trace("Token para usuario {} ({}) [{}]",lu.get(0).getUsername(),token,request.getRequestURI());

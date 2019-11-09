@@ -10,8 +10,6 @@ import org.springframework.scheduling.annotation.Scheduled;
 
 import com.example.demo.business.BusinessException;
 import com.example.demo.business.IAuthTokenService;
-import com.example.demo.business.IGraphBusiness;
-import com.example.demo.business.INotificacionesBusiness;
 
 @Configuration
 @EnableScheduling
@@ -38,24 +36,5 @@ public class ScheduledEvents {
 		//log.info("Ejecutando tarea");
 	}
 	
-	
-	@Autowired
-	private IGraphBusiness graphService;
-	
-	@Scheduled(fixedDelay = 5000, initialDelay = 10000)
-	// @Scheduled(cron = " 0 0/1 * 1/1 * ? *")
-	public void estados() {
-		graphService.pushGraphData();
-		
-	}
-	
-	
-	@Autowired
-	private INotificacionesBusiness notiService;
-	
-	@Scheduled(fixedDelay = 3000, initialDelay = 1000)
-	public void notificaiones() {
-		notiService.randomNoti();
-		
-	}
+
 }

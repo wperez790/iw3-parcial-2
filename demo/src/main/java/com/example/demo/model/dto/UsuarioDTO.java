@@ -4,6 +4,10 @@ public class UsuarioDTO {
 	private String username;
 	private String email;
 
+	
+	
+
+
 	public String getUsername() {
 		return username;
 	}

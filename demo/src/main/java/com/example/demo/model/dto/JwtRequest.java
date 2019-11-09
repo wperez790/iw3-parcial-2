@@ -1,4 +1,4 @@
-package com.example.demo.model;
+package com.example.demo.model.dto;
 
 import java.io.Serializable;
 public class JwtRequest implements Serializable {

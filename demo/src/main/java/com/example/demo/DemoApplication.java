@@ -1,16 +1,10 @@
 package com.example.demo;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration;
-import org.springframework.security.crypto.password.PasswordEncoder;
 
-import com.example.demo.model.Usuario;
-import com.example.demo.persistence.UsuarioRepository;
 import com.example.demo.util.DefaultData;
 
 //@SpringBootApplication(exclude = {SecurityAutoConfiguration.class})
@@ -21,13 +15,13 @@ public class DemoApplication implements CommandLineRunner {
 		SpringApplication.run(DemoApplication.class, args);
 	}
 
-	@Autowired
-	private PasswordEncoder passwordEncoder;
+	/*@Autowired
+	private PasswordEncoder passwordEncoder;*/
 	@Autowired
 	private DefaultData defaultData;
 
-	@Autowired
-	private UsuarioRepository usuarioDAO;
+	/*@Autowired
+	private UsuarioRepository usuarioDAO;*/
 
 	@Override
 	public void run(String... args) throws Exception {

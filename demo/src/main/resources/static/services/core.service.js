@@ -23,7 +23,6 @@ angular.module('iw3').factory('coreService',function($http,URL_BASE){
 				url: URL_BASE+'loginJwt',
 				headers : { 'Content-Type': 'application/json' },
 				data: user
-				//data: 'name='+user.name+'&password='+user.password
 			};
 			return $http(req);
 		}

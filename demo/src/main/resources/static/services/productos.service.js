@@ -20,6 +20,18 @@ angular.module('iw3').factory('productosService',function($http, URL_API_BASE){
 		list:function() {
 			//return $http.get("/db/productos.js");
 			return $http.get(URL_API_BASE+"productos");
+		},
+	
+		insert:function(prod) {
+			return $http.post(URL_API_BASE+"productos",prod);
+		},
+		
+		update:function(prod) {
+			return $http.put(URL_API_BASE+"productos",prod);
+		},
+		
+		delete:function(id){
+			return $http.delete(URL_API_BASE+"productos/"+id);
 		}
 	}
 });

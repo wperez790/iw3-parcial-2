@@ -1,7 +1,8 @@
 <h2>{{titulo}}</h2>
 <hr />
 <div ng-show="autenticado">
-	<button class="btn btn-primary" ng-click="refresh()">Refresh</button>
+	<button class="btn btn-primary" ng-click="refresh()">Actualizar</button>
+	<button class="btn btn-success" ng-click="openInsertForm()">Insertar</button>
 	<hr />
 	<div class="row">
 		<div class="col-lg-6">
@@ -32,6 +33,7 @@
 						<td>{{p.descripcion}}</td>
 						<td>{{p.precio}}</td>
 						<td>
+						<button ng-click="openUpdateForm(p)" class="btn btn-info ">Modificar</button>
 						<button ng-click="eliminar(p)" class="btn btn-warning glyphicon glyphicon-remove"></button>
 						</td>
 					</tr>

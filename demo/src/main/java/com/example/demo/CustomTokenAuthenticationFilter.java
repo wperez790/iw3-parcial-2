@@ -80,24 +80,21 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 		
 		final String jwtToken = request.getHeader(AUTH_JWT_HEADER);
 		String username = null;
-	
-		String URI = request.getRequestURI();
-		
+			
 		if (jwtToken != null) {
 			try {
 				username = jwtTokenUtil.getUsernameFromToken(jwtToken);
 			} catch (IllegalArgumentException e) {
-				log.error("Unable to get JWT Token");
+				//log.error("Unable to get JWT Token");
 			} catch (ExpiredJwtException e) {
-				log.error("JWT Token has expired");
+				//log.error("JWT Token has expired");
 			}
 		} 
-		// Once we get the token validate it.
+		
 		if (username != null && SecurityContextHolder.getContext().getAuthentication() == null) {
 			UserDetails userDetails = this.userDetailsService.loadUserByUsername(username);
-			// if token is valid configure Spring Security to manually set
-			// authentication
-			if (jwtTokenUtil.validateToken(jwtToken, userDetails)) {
+
+			if (jwtTokenUtil.validateToken(jwtToken, userDetails.getUsername())) {
 				UsernamePasswordAuthenticationToken usernamePasswordAuthenticationToken = new UsernamePasswordAuthenticationToken(
 						userDetails, null, userDetails.getAuthorities());
 				usernamePasswordAuthenticationToken

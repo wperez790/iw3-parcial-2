@@ -19,8 +19,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
+import com.example.demo.business.IAuditoriaBusiness;
 import com.example.demo.business.IAuthTokenService;
 import com.example.demo.config.JwtTokenUtil;
+import com.example.demo.model.dto.AuditConfDTO;
 import com.example.demo.persistence.UsuarioRepository;
 import com.example.demo.web.Constantes;
 
@@ -32,9 +34,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	@Autowired
 	private UserDetailsService userDetailService;
 	
-	
-	
-
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
 		// auth.inMemoryAuthentication().withUser("pepe").password(passwordEncoder.encode("clave")).roles("USER").and()
@@ -72,12 +71,16 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private UsuarioRepository usuariosDAO;
 	@Autowired
 	private JwtTokenUtil jwtTokenUtil;
+	@Autowired
+	private IAuditoriaBusiness auditoriaBusiness;
+	@Autowired
+	private AuditConfDTO auditConfDTO;
 	
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 		http.addFilterAfter(new CustomTokenAuthenticationFilter(
-				authTokenService, usuariosDAO,userDetailService,jwtTokenUtil
-				),
+				authTokenService, usuariosDAO,userDetailService,
+				jwtTokenUtil,auditoriaBusiness,auditConfDTO),
 				UsernamePasswordAuthenticationFilter.class);
 		http.httpBasic();
 		http.authorizeRequests().antMatchers("/api/v1/**").authenticated();

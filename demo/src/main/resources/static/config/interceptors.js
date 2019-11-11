@@ -8,6 +8,7 @@ angular.module('iw3')
 			if ($localStorage.logged && $localStorage.userdata) {
 				userdata = $localStorage.userdata;
 				config.headers['X-AUTH-TOKEN'] = userdata.authtoken;
+				config.headers['JWT-HEADER']= userdata.jwtToken;
 				$rootScope.autenticado = true;
 			} else {
 				//console.log($location)

@@ -9,7 +9,7 @@ var app = angular.module('iw3');
 
 app.constant('URL_API_BASE', '/api/v1/')
 app.constant('URL_BASE', '/')
-.constant('URL_WS', '/api/v1/ws')
+
 
 app.run(function($rootScope, $location, $uibModal, coreService, $localStorage, $stomp) {
 	
@@ -32,6 +32,7 @@ app.run(function($rootScope, $location, $uibModal, coreService, $localStorage, $
 				roles : []
 			};
 	};
+	
 	$rootScope.openLoginForm = function() {
 		if (!$rootScope.loginOpen) {
 			$rootScope.cleanLoginData();
@@ -46,6 +47,29 @@ app.run(function($rootScope, $location, $uibModal, coreService, $localStorage, $
 			});
 		}
 	};
+	
+	$rootScope.InsertProdOpen = false;
+	$rootScope.openProductForm = function(insert) {		
+		var control;	
+		console.log($rootScope.InsertProdOpen);
+		if(insert)
+			control = "insertProductos";
+		else
+			control = "updateProductos"
+		
+		if (!$rootScope.InsertProdOpen) {
+			$rootScope.InsertProdOpen = true;
+			$uibModal.open({
+				animation : true,
+				backdrop : 'static',
+				keyboard : false,
+				templateUrl : 'views/ProductForm.html',
+				controller : control,
+				size : 'md'
+			});
+		}
+	};
+	
 	$rootScope.authInfo=function(cb,rolif,cbrolif) {
 		//Si el usuario está en el rol indicado en rolif, se ejecuta la callback cbrolif
 		if(rolif && cbrolif && $rootScope.inRole('ROLE_'+rolif) )

@@ -15,6 +15,16 @@ angular.module('iw3').factory('coreService',function($http,URL_BASE){
 				data: 'username='+user.name+'&password='+user.password
 			};
 			return $http(req);
+		},
+		
+		loginJwt: function(user) {
+			var req = {
+				method: 'POST',
+				url: URL_BASE+'loginJwt',
+				headers : { 'Content-Type': 'application/json' },
+				data: user
+			};
+			return $http(req);
 		}
 	}
 });

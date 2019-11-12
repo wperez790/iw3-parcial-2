@@ -17,15 +17,32 @@ public class AuditConfDTO {
 	
 	@Value("${com.example.demo.audit.body.maxSize:1 Kb}")
 	private String auditBodySize;	
+	
+	@Value("${com.example.demo.audit.pattern:*}")
+	private String auditRequests;
+	
+	/*@Value("${com.example.demo.audit.requests:*}")
+	private String auditRequests;*/
 			
 	public AuditConfDTO() {}
 	
 	public AuditConfDTO(Boolean auditEnable, String auditHeaders, 
-			Boolean auditBody, String auditBodySize) {
+			Boolean auditBody, String auditBodySize, String auditRequests) {
 		this.auditEnable = auditEnable;		
 		this.auditHeaders = auditHeaders;
 		this.auditBody = auditBody;		
 		this.auditBodySize = auditBodySize;
+		this.auditRequests = auditRequests;
+	}
+	
+	
+
+	public String getAuditRequests() {
+		return auditRequests;
+	}
+
+	public void setAuditRequests(String auditRequests) {
+		this.auditRequests = auditRequests;
 	}
 
 	public Boolean getAuditEnable() {

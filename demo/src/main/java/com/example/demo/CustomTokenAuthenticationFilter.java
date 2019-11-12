@@ -9,6 +9,8 @@ import java.io.Reader;
 import java.util.Date;
 import java.util.Enumeration;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -110,12 +112,26 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 	}
 	
 	private String getHeadersJSON(HttpServletRequest request,String headers) {
-		Enumeration<String> a = request.getHeaderNames();
+		Enumeration<String> headersRequest = request.getHeaderNames();
 		JSONObject json = new JSONObject();
+		String[] headersArray = headers.trim().split(",");
 		String header;
-		while(a.hasMoreElements()){
-			header = a.nextElement();
-			json.put(header, request.getHeader(header));
+		if(headers.equals("*")) {
+			while(headersRequest.hasMoreElements()){
+				header = headersRequest.nextElement();
+				json.put(header, request.getHeader(header));
+			}
+		}
+		else {
+			while(headersRequest.hasMoreElements()) {
+				String aux = headersRequest.nextElement();
+				for(int i=0; i < headersArray.length;i++) {					
+					if(aux.equals(headersArray[i])){
+						json.put(aux, request.getHeader(aux));
+						break;
+					}
+				}				
+			}
 		}
 		return json.toString();
 	}
@@ -127,7 +143,35 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 			log.error(e.getMessage(),e);
 		}
 	}
+	
+	/*Función que arma el patron solicitado en las propiedades y comprueba si se corresponde con el request method*/
+	/*private boolean rgxRequests(String request) {
+		String [] requestsArray =  auditConf.getAuditRequests().trim().split(",");
+		String pattern = "";
+		
+		for(String req: requestsArray ) {
+			if(req.equals("*"))
+				pattern=".*";
+			pattern += "["+ req + "]";
+		}
+		
+		Pattern patron = Pattern.compile(pattern);
+		
+		Matcher matcher = patron.matcher(request);
+		
+		return matcher.find();
+	}*/
 
+	private boolean rgxRequests(String request) {
+		String pattern =  auditConf.getAuditRequests().trim();
+		
+		Pattern patron = Pattern.compile(pattern);
+		
+		Matcher matcher = patron.matcher(request);
+		
+		return matcher.find();
+	}
+	
 	@Override
 	protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
 			throws ServletException, IOException {
@@ -137,7 +181,11 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 		request = wrappedRequest;
 		
 		Auditoria auditoria = new Auditoria();
-				
+
+		if(auditConf.getAuditEnable())
+			auditConf.setAuditEnable(rgxRequests(request.getRequestURI()));
+			//auditConf.setAuditEnable(rgxRequests(request.getMethod()));
+		
 		if(auditConf.getAuditEnable()) {
 			auditoria.setTiempo(new Date());
 			auditoria.setUri(request.getRequestURI());
@@ -373,4 +421,6 @@ public class CustomTokenAuthenticationFilter extends OncePerRequestFilter {
 		}
 
 	}
+
+
 }
